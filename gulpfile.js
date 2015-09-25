@@ -9,6 +9,8 @@ var server = require('gulp-server-livereload');
 var concat = require('gulp-concat');
 var sass = require('gulp-sass');
 var watch = require('gulp-watch');
+var uglify = require('gulp-uglify');
+var streamify = require('gulp-streamify');
 
 var notify = function(error) {
   var message = 'In: ';
@@ -36,7 +38,7 @@ var bundler = watchify(browserify({
   entries: ['./src/app.jsx'],
   transform: [reactify],
   extensions: ['.jsx'],
-  debug: true,
+  debug: false,
   cache: {},
   packageCache: {},
   fullPaths: true
@@ -47,6 +49,8 @@ function bundle() {
     .bundle()
     .on('error', notify)
     .pipe(source('main.js'))
+    .pipe(gulp.dest('./'))
+    .pipe(streamify(uglify()))
     .pipe(gulp.dest('./'))
 }
 bundler.on('update', bundle)

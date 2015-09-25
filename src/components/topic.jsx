@@ -17,7 +17,7 @@ var Topic = React.createClass({
     Actions.getImages(this.props.params.id);
   },
   componentWillReceiveProps: function(nextProps) {
-    Actions.getImages(this.props.params.id);
+    Actions.getImages(nextProps.params.id);
   },
   render: function() {
     return (
